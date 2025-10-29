@@ -1,0 +1,141 @@
+{
+  "personal": {
+    "name": "Alaa Eddin Albarghoth",
+    "title": "Senior Android Engineer",
+    "location": "Istanbul, Turkey",
+    "email": "Eng.alaa.brghoth@gmail.com",
+    "phone": "+90 553 956 5750",
+    "github": "https://github.com/AlaaEddinAlbarghoth",
+    "linkedin": "",
+    "whatsapp": "+905539565750",
+    "summary": "Senior Android Engineer with 8+ years of experience delivering and scaling mobile systems for messaging, commerce, and field operations. Expert in Kotlin, Jetpack Compose, KMP, Coroutines/Flow, and Clean Architecture. Proven record in modernizing legacy ecosystems, improving CI/CD pipelines, and mentoring developers to ship stable, user-centric experiences at scale. Actively seeking worldwide remote roles (USA • Australia • Europe) and open to on-site/hybrid opportunities."
+  },
+  "experience": [
+    {
+      "company": "Ayoba, South Africa (Via Appcent)",
+      "title": "Android Developer",
+      "period": "Sep 2022 - Mar 2025",
+      "highlights": [
+        "Built and optimized features for Ayoba, a messaging app with 50M+ users, improving stability and UX.",
+        "Contributed to architecture modernization using Jetpack and Hilt.",
+        "Collaborated with MTN teams to integrate new services within the OneApp ecosystem."
+      ]
+    },
+    {
+      "company": "AppCent, KadiKoy, Istanbul - Turkey",
+      "title": "Android Developer",
+      "period": "Dec 2020 - Mar 2025",
+      "highlights": [
+        "Delivered core messaging features and performance fixes for Ayoba (MTN Group) in a multi-million-user ecosystem; refactored legacy modules to Clean Architecture and introduced Jetpack Compose in key surfaces",
+        "Built Android components for Safat Home (Alghanim Group) covering browse, cart, and checkout flows; optimized network and UI performance for e-commerce journeys",
+        "Implemented mobile workflows for technicians (job lifecycle, scheduling, push notifications) and a reliable media capture/upload pipeline; improved task throughput and upload success",
+        "Drove CI/CD modernization with GitLab CI and AppCenter, reducing build times by ~25-35% and enabling weekly releases",
+        "Led code reviews and mentored junior engineers to improve code quality and modularization."
+      ]
+    },
+    {
+      "company": "MGS Software, Yıldız Teknik Teknopark, Istanbul - Turkey",
+      "title": "Android Developer",
+      "period": "Jan 2020 - Dec 2020",
+      "highlights": [
+        "Modernized legacy security apps with Jetpack, Hilt, and Room, improving stability and reducing crashes ~40%",
+        "Added offline-first synchronization and real-time push via Kotlin Coroutines and FCM",
+        "Introduced GitLab CI/CD pipelines for staged build delivery and Play Console publishing"
+      ]
+    },
+    {
+      "company": "TamTech, Istanbul - Turkey",
+      "title": "Android Developer",
+      "period": "Dec 2018 - Dec 2019",
+      "highlights": [
+        "Built real-time auction and AR-based apps using WebSocket, ARCore, and Kotlin/Java",
+        "Enhanced deployment frequency through AppCenter CI/CD automation",
+        "Optimized rendering and interaction latency (~15-20% improvement)"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Messaging at Scale (Ayoba)",
+      "description": "Feature delivery and modernization in a multi-million-user app; improved reliability and UX",
+      "period": "Dec 2020 – Mar 2025",
+      "tech": ["Kotlin", "Jetpack Compose", "Clean Architecture", "Hilt"]
+    },
+    {
+      "name": "Kokpit Field Suite",
+      "description": "Reduced sync failures and improved release cadence through offline-first patterns and CI/CD automation",
+      "period": "Jan 2020 – Dec 2020",
+      "tech": ["Kotlin", "Room", "Coroutines", "GitLab CI"]
+    },
+    {
+      "name": "CI/CD Pipeline Automation",
+      "description": "Implemented CI/CD pipelines using GitLab CI/CD and Fastlane, cutting release time in half",
+      "period": "2020 - 2025",
+      "tech": ["GitLab CI", "Fastlane", "AppCenter"]
+    },
+    {
+      "name": "Fixly Field Ops",
+      "description": "Technician workflows with robust media capture/upload and push notifications; improved task completion flow and upload reliability",
+      "period": "Dec 2020 – Mar 2025",
+      "tech": ["Kotlin", "WorkManager", "FCM", "Retrofit"]
+    },
+    {
+      "name": "Safat Home Commerce",
+      "description": "Performance and UX enhancements across browse-to-checkout flows for retail journeys",
+      "period": "Dec 2020 – Mar 2025",
+      "tech": ["Kotlin", "Jetpack", "Retrofit", "Glide"]
+    }
+  ],
+  "skills": {
+    "Languages": ["Kotlin", "Java"],
+    "Frameworks & Libraries": [
+      "Jetpack Compose",
+      "Jetpack (Navigation, Room, WorkManager)",
+      "KMP",
+      "Coroutines/Flow",
+      "Retrofit",
+      "DI (Hilt/Koin)",
+      "FCM",
+      "ARCore"
+    ],
+    "Architecture & Patterns": [
+      "Clean Architecture",
+      "SOLID",
+      "MVVM/MVI",
+      "Modularization",
+      "Offline-first"
+    ],
+    "Tools & DevOps": [
+      "Git",
+      "GitLab CI",
+      "AppCenter",
+      "Jira",
+      "Code Review",
+      "Unit & UI Testing (JUnit, Espresso)",
+      "Play Console",
+      "Crashlytics",
+      "Room/SQLite"
+    ]
+  },
+  "education": [
+    {
+      "degree": "BSc Computer Engineering",
+      "institution": "Istanbul University, Istanbul, Turkey",
+      "year": "2019",
+      "status": "Incomplete"
+    },
+    {
+      "degree": "BSc Software Engineering",
+      "institution": "Yarmouk Private University, Syria-Daraa",
+      "year": "2009 - 2013",
+      "status": "Incomplete"
+    }
+  ],
+  "meta": {
+    "lastUpdated": "2025-10-30",
+    "cvPath": "/resume/alaa-albarghoth-cv.pdf",
+    "seoTitle": "Alaa Eddin Albarghoth - Senior Android Engineer",
+    "seoDescription": "Senior Android Engineer with 8+ years of experience in Kotlin, Jetpack Compose, KMP, and Clean Architecture. Built messaging apps for 50M+ users.",
+    "ogImage": "/og-image.png"
+  }
+}
