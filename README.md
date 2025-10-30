@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CV Portfolio - Alaa Eddin Albarghoth
 
 > Production-ready animated portfolio website showcasing 8+ years of Android engineering experience
@@ -163,3 +164,7 @@ pnpm ingest:cv path/to/your-cv.pdf
 ---
 
 Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion
+=======
+# cv-portfolio-alaa
+Professional CV Portfolio of Alaa Eddin Albarghoth - Senior Android Engineer
+>>>>>>> 380791776269fbb547bd59ddd8862fedce7cc230
