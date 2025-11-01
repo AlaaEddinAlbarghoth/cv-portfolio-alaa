@@ -49,39 +49,39 @@ export default function About() {
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <p className="text-body-responsive mb-8 text-center max-w-3xl mx-auto">
-              I'm a passionate Full-Stack Engineer with over 8 years of experience building scalable web applications and leading development teams. I specialize in modern JavaScript frameworks, cloud architecture, and driving technical excellence through mentorship and collaboration.
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-12 text-center max-w-4xl mx-auto">
+              I'm a passionate Android Engineer with 8+ years of experience building and scaling mobile applications for millions of users. I specialize in Kotlin, Jetpack Compose, and Clean Architecture, with a proven track record of modernizing legacy systems and improving CI/CD pipelines.
             </p>
             
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 text-left">
-              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                <p className="text-body text-secondary">I love mentoring junior developers and fostering collaborative team environments</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+              <div className="flex items-start gap-4 p-6 bg-gray-900/50 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                <p className="text-gray-300 leading-relaxed">Built and optimized features for Ayoba messaging app serving 50M+ users, improving stability and user experience</p>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                <p className="text-body text-secondary">Passionate about optimizing CI/CD pipelines and implementing DevOps best practices</p>
+              <div className="flex items-start gap-4 p-6 bg-gray-900/50 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                <p className="text-gray-300 leading-relaxed">Drove CI/CD modernization with GitLab CI and AppCenter, reducing build times by 25-35% and enabling weekly releases</p>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                <p className="text-body text-secondary">Experienced in leading cross-functional teams and driving technical innovation</p>
+              <div className="flex items-start gap-4 p-6 bg-gray-900/50 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                <p className="text-gray-300 leading-relaxed">Modernized legacy security apps with Jetpack, Hilt, and Room, improving stability and reducing crashes by ~40%</p>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                <p className="text-body text-secondary">Focused on clean code architecture and scalable system design principles</p>
+              <div className="flex items-start gap-4 p-6 bg-gray-900/50 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                <p className="text-gray-300 leading-relaxed">Led code reviews and mentored junior engineers to improve code quality and modularization best practices</p>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                <p className="text-body text-secondary">Committed to continuous learning and staying current with emerging technologies</p>
+              <div className="flex items-start gap-4 p-6 bg-gray-900/50 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                <p className="text-gray-300 leading-relaxed">Implemented offline-first synchronization and real-time push via Kotlin Coroutines and FCM</p>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                <p className="text-body text-secondary">Strong advocate for test-driven development and code quality practices</p>
+              <div className="flex items-start gap-4 p-6 bg-gray-900/50 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                <p className="text-gray-300 leading-relaxed">Built real-time auction and AR-based apps using WebSocket, ARCore, and Kotlin/Java</p>
               </div>
             </div>
           </motion.div>

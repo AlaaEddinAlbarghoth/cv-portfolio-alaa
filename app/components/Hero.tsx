@@ -62,7 +62,7 @@ export default function Hero() {
           </motion.h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-secondary max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-lg md:text-xl font-semibold text-secondary/90 max-w-3xl mx-auto mb-16 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -71,23 +71,25 @@ export default function Hero() {
           </motion.p>
 
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-20"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
             <a
               href="#contact"
-              className="btn-primary w-full sm:w-auto text-center px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl touch-target"
+              className="btn-primary w-full sm:w-auto text-center px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg touch-target group"
+              aria-label="Get in touch via email or contact form"
             >
-              Get In Touch
+              <span className="group-hover:scale-105 transition-transform duration-200">Get In Touch</span>
             </a>
             <a
               href="/resume/alaa-albarghoth-cv.pdf"
               download
-              className="btn-secondary w-full sm:w-auto text-center px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 touch-target"
+              className="btn-secondary w-full sm:w-auto text-center px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg touch-target group"
+              aria-label="Download Alaa Eddin Albarghoth's CV and resume"
             >
-              Download CV
+              <span className="group-hover:scale-105 transition-transform duration-200">Download CV</span>
             </a>
           </motion.div>
         </motion.div>

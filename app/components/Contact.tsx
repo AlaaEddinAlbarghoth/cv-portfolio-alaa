@@ -59,7 +59,7 @@ export default function Contact() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-6">
-            Get In <span className="text-primary">Touch</span>
+            Let's <span className="text-primary">Collaborate</span>
           </h2>
           <p className="text-center text-secondary text-lg mb-16 max-w-2xl mx-auto">
             Actively seeking worldwide remote opportunities. Let's discuss how I can contribute to your team.
