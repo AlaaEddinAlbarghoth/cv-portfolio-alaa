@@ -43,15 +43,47 @@ export default function About() {
           </div>
 
           <motion.div
-            className="prose prose-lg mx-auto max-w-4xl"
+            className="max-w-4xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <p className="text-lg text-secondary leading-relaxed text-center">
-              {personal.summary}
+            <p className="text-body-responsive mb-8 text-center max-w-3xl mx-auto">
+              I'm a passionate Full-Stack Engineer with over 8 years of experience building scalable web applications and leading development teams. I specialize in modern JavaScript frameworks, cloud architecture, and driving technical excellence through mentorship and collaboration.
             </p>
+            
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 text-left">
+              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                <p className="text-body text-secondary">I love mentoring junior developers and fostering collaborative team environments</p>
+              </div>
+              
+              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                <p className="text-body text-secondary">Passionate about optimizing CI/CD pipelines and implementing DevOps best practices</p>
+              </div>
+              
+              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                <p className="text-body text-secondary">Experienced in leading cross-functional teams and driving technical innovation</p>
+              </div>
+              
+              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                <p className="text-body text-secondary">Focused on clean code architecture and scalable system design principles</p>
+              </div>
+              
+              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                <p className="text-body text-secondary">Committed to continuous learning and staying current with emerging technologies</p>
+              </div>
+              
+              <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                <p className="text-body text-secondary">Strong advocate for test-driven development and code quality practices</p>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div

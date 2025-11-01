@@ -71,21 +71,21 @@ export default function Hero() {
           </motion.p>
 
           <motion.div 
-            className="flex flex-wrap gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
             <a
               href="#contact"
-              className="px-8 py-4 bg-primary hover:bg-primary-dark text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="btn-primary w-full sm:w-auto text-center px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl touch-target"
             >
               Get In Touch
             </a>
             <a
               href="/resume/alaa-albarghoth-cv.pdf"
               download
-              className="px-8 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              className="btn-secondary w-full sm:w-auto text-center px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 touch-target"
             >
               Download CV
             </a>
