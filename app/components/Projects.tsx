@@ -20,7 +20,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
   
   return (
     <motion.article
-      className="group relative bg-foreground/5 rounded-2xl p-6 hover:bg-foreground/10 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl border border-gray-200/10 hover:border-blue-500/30 cursor-pointer"
+      className="group relative bg-foreground/5 rounded-2xl p-6 hover:bg-foreground/10 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl border border-gray-200/10 hover:border-blue-500/30 cursor-pointer overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.6, ease: 'easeOut' }}
@@ -86,21 +86,77 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         {project.tech && project.tech.length > 0 && (
           <div className="flex flex-wrap gap-2" role="list" aria-label="Technologies used">
             {project.tech.map((tech, techIndex) => (
-              <span
+              <motion.span
                 key={techIndex}
-                className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30 hover:bg-blue-500/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30 hover:bg-blue-500/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 relative overflow-hidden"
                 role="listitem"
                 tabIndex={0}
+                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  scale: 1, 
+                  y: 0,
+                  transition: {
+                    delay: (index * 0.1) + (techIndex * 0.05),
+                    duration: 0.4,
+                    ease: "easeOut"
+                  }
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 4px 12px rgba(59, 130, 246, 0.3)",
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.95 }}
               >
                 {tech}
-              </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ 
+                    x: '100%',
+                    transition: { duration: 0.6, ease: "easeInOut" }
+                  }}
+                />
+              </motion.span>
             ))}
           </div>
         )}
       </div>
 
+      {/* Rotating Light Reflection Overlay */}
+      <motion.div
+        className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 via-30% to-transparent"
+          style={{ 
+            width: '200%',
+            transform: 'rotate(45deg) translateX(-100%)',
+            transformOrigin: 'center',
+          }}
+          animate={{
+            x: ['-100%', '200%']
+          }}
+          transition={{
+            duration: 2,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 1
+          }}
+        />
+      </motion.div>
+
       {/* Enhanced hover glow effect */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <motion.div 
+        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-transparent to-purple-500/10"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
     </motion.article>
   );
 };

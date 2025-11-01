@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Types for enterprise-grade type safety
@@ -30,43 +30,70 @@ const NAV_ITEMS: NavItem[] = [
 
 const SCROLL_THRESHOLD = 50;
 const SECTION_VIEWPORT_OFFSET = 100;
+const INTERSECTION_RATIO = 0.6; // 60% of section must be visible
 
 export default function Navigation({ className }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Memoized navigation items for performance
   const navItems = useMemo(() => NAV_ITEMS, []);
 
-  // Debounced scroll handler for performance optimization
-  const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+  // Advanced Intersection Observer for precise scroll spy
+  const setupIntersectionObserver = useCallback(() => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
 
-    // Update active section based on scroll position with improved detection
-    const sections = navItems.map(item => item.id);
-    let currentActive = activeSection;
+    const options = {
+      root: null,
+      rootMargin: `-${SECTION_VIEWPORT_OFFSET}px 0px -${window.innerHeight - SECTION_VIEWPORT_OFFSET}px 0px`,
+      threshold: INTERSECTION_RATIO,
+    };
 
-    for (const section of sections) {
-      const element = document.getElementById(section);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        const elementTop = rect.top + window.scrollY;
-        const elementBottom = elementTop + rect.height;
-        const scrollPosition = window.scrollY + SECTION_VIEWPORT_OFFSET;
+    observerRef.current = new IntersectionObserver((entries) => {
+      let mostVisibleSection = '';
+      let maxRatio = 0;
 
-        if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
-          currentActive = section;
-          break;
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+          maxRatio = entry.intersectionRatio;
+          mostVisibleSection = entry.target.id;
         }
-      }
-    }
+      });
 
-    if (currentActive !== activeSection) {
-      setActiveSection(currentActive);
-    }
+      if (mostVisibleSection && mostVisibleSection !== activeSection) {
+        setActiveSection(mostVisibleSection);
+      }
+    }, options);
+
+    // Observe all sections
+    navItems.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observerRef.current?.observe(element);
+      }
+    });
   }, [navItems, activeSection]);
 
+  // Enhanced scroll handler with parallax effects
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    
+    // Enhanced scroll detection
+    setIsScrolled(scrollY > SCROLL_THRESHOLD);
+    
+    // Subtle parallax effect (clamped between -10 and 10)
+    const newParallaxOffset = Math.max(-10, Math.min(10, scrollY * 0.02));
+    setParallaxOffset(newParallaxOffset);
+  }, []);
+
   useEffect(() => {
+    // Initialize intersection observer
+    setupIntersectionObserver();
+    
     let ticking = false;
     
     const scrollListener = () => {
@@ -80,60 +107,99 @@ export default function Navigation({ className }: NavigationProps) {
     };
 
     window.addEventListener('scroll', scrollListener, { passive: true });
-    return () => window.removeEventListener('scroll', scrollListener);
-  }, [handleScroll]);
+    
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [handleScroll, setupIntersectionObserver]);
+
+  // Parallax background motion variants
+  const backgroundVariants = {
+    idle: {
+      y: 0,
+      opacity: 0,
+      scale: 1,
+    },
+    visible: {
+      y: parallaxOffset,
+      opacity: 0.05,
+      scale: 1.02,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 30,
+      },
+    },
+  };
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/80 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
-      } ${className || ''}`}
+      className={`fixed top-0 left-0 right-0 z-40 overflow-hidden ${
+        className || ''
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <motion.a
-            href="#home"
-            className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label="Go to home section"
-          >
-            AA
-          </motion.a>
+      {/* Parallax Background Layer */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 blur-xl"
+        variants={backgroundVariants}
+        animate={isScrolled ? 'visible' : 'idle'}
+      />
+      
+      {/* Main Navigation Content */}
+      <div className={`relative transition-all duration-300 ${
+        isScrolled
+          ? 'bg-background/80 backdrop-blur-md shadow-lg border-b border-border/20'
+          : 'bg-transparent'
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <motion.a
+              href="#home"
+              className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Go to home section"
+            >
+              AA
+            </motion.a>
 
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`relative text-sm font-medium transition-colors duration-300 hover:text-blue-400 focus:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded ${
-                  activeSection === item.id 
-                    ? 'text-primary font-semibold' 
-                    : 'text-secondary'
-                }`}
-                aria-label={`Navigate to ${item.label} section`}
-                aria-current={activeSection === item.id ? 'page' : undefined}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <motion.div
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400"
-                    layoutId="activeSection"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </a>
-            ))}
+            <div className="hidden md:flex items-center gap-8">
+              {navItems.map((item) => (
+                <motion.a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`relative text-sm font-medium transition-colors duration-300 hover:text-blue-400 focus:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded px-2 py-1 ${
+                    activeSection === item.id 
+                      ? 'text-primary font-semibold' 
+                      : 'text-secondary'
+                  }`}
+                  aria-label={`Navigate to ${item.label} section`}
+                  aria-current={activeSection === item.id ? 'page' : undefined}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.label}
+                  {activeSection === item.id && (
+                    <motion.div
+                      className="absolute -bottom-1 left-2 right-2 h-0.5 bg-blue-400"
+                      layoutId="activeSection"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </motion.a>
+              ))}
+            </div>
+
+            <MobileMenu navItems={navItems} activeSection={activeSection} />
           </div>
-
-          <MobileMenu navItems={navItems} activeSection={activeSection} />
         </div>
       </div>
     </motion.nav>
