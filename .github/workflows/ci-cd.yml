@@ -1,0 +1,378 @@
+## ========================================
+## 🚀 Continuous Integration / Continuous Deployment (CI/CD) Pipeline
+## ========================================
+## This GitHub Actions workflow automates the entire lifecycle:
+## - Linting, type checking, and formatting
+## - Running unit and E2E tests (Playwright)
+## - Building the app
+## - Running security and performance audits
+## - Deploying to staging or production
+## - Generating coverage and Lighthouse reports
+## ========================================
+#
+#name: CI/CD Pipeline
+#
+## ----------------------------------------
+## 📦 Trigger Conditions
+## ----------------------------------------
+## Runs automatically on pushes or pull requests
+## targeting either `main` or `develop` branches.
+#on:
+#  push:
+#    branches: [main, develop]
+#  pull_request:
+#    branches: [main, develop]
+#
+## ========================================
+## 🧹 JOB 1: Lint and Type Check
+## ========================================
+## Ensures code quality before any build or test runs.
+#jobs:
+#  lint-and-typecheck:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      # 1️⃣ Checkout source code from the repo
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      # 2️⃣ Setup Node.js (version 20) with pnpm cache
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      # 3️⃣ Install pnpm package manager
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: latest
+#
+#      # 4️⃣ Install dependencies
+#      - name: Install dependencies
+#        run: pnpm install
+#
+#      # 5️⃣ Run ESLint to check code style
+#      - name: Run ESLint
+#        run: pnpm lint
+#
+#      # 6️⃣ Run TypeScript compiler for type validation
+#      - name: Run TypeScript type check
+#        run: pnpm typecheck
+#
+#      # 7️⃣ Run Prettier to verify code formatting
+#      - name: Run Prettier check
+#        run: pnpm format --check
+#
+#  # ========================================
+#  # 🧪 JOB 2: Test (Playwright)
+#  # ========================================
+#  # Runs Playwright tests to validate app functionality.
+#  test:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: latest
+#
+#      - name: Install dependencies
+#        run: pnpm install
+#
+#      # Install browsers required for Playwright
+#      - name: Install Playwright browsers
+#        run: pnpm exec playwright install --with-deps
+#
+#      # Run Playwright test suite
+#      - name: Run Playwright tests
+#        run: pnpm test
+#
+#      # Upload test reports for later viewing
+#      - name: Upload test results
+#        uses: actions/upload-artifact@v4
+#        if: always()
+#        with:
+#          name: playwright-report
+#          path: playwright-report/
+#          retention-days: 30
+#
+#  # ========================================
+#  # 🏗️ JOB 3: Build
+#  # ========================================
+#  # Builds the project after linting and testing pass.
+#  build:
+#    runs-on: ubuntu-latest
+#    needs: [lint-and-typecheck, test]
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: latest
+#
+#      - name: Install dependencies
+#        run: pnpm install
+#
+#      # Compile / build project
+#      - name: Build application
+#        run: pnpm build
+#
+#      # Upload built output for other jobs or debugging
+#      - name: Upload build artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: build-files
+#          path: out/
+#          retention-days: 7
+#
+#  # ========================================
+#  # 🛡️ JOB 4: Security Scan
+#  # ========================================
+#  # Checks for vulnerabilities and secrets in the codebase.
+#  security-scan:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      # Run dependency vulnerability scan
+#      - name: Run security audit
+#        run: pnpm audit --audit-level moderate
+#
+#      # Detect leaked secrets or credentials
+#      - name: Check for secrets
+#        uses: trufflesecurity/trufflehog@main
+#        with:
+#          path: ./
+#          base: main
+#          head: HEAD
+#          extra_args: --debug --only-verified
+#
+#  # ========================================
+#  # ♿ JOB 5: Accessibility Test
+#  # ========================================
+#  # Uses Playwright to validate accessibility.
+#  accessibility-test:
+#    runs-on: ubuntu-latest
+#    needs: build
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: latest
+#
+#      - name: Install dependencies
+#        run: pnpm install
+#
+#      - name: Install Playwright browsers
+#        run: pnpm exec playwright install --with-deps
+#
+#      # Run accessibility-specific tests
+#      - name: Run accessibility tests
+#        run: pnpm exec playwright test --project=chromium
+#
+#      # Upload test results
+#      - name: Upload accessibility report
+#        uses: actions/upload-artifact@v4
+#        if: always()
+#        with:
+#          name: accessibility-report
+#          path: accessibility-results/
+#          retention-days: 30
+#
+#  # ========================================
+#  # ⚡ JOB 6: Performance Test
+#  # ========================================
+#  # Runs Playwright tests focused on app performance.
+#  performance-test:
+#    runs-on: ubuntu-latest
+#    needs: build
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: latest
+#
+#      - name: Install dependencies
+#        run: pnpm install
+#
+#      - name: Install Playwright browsers
+#        run: pnpm exec playwright install --with-deps
+#
+#      # Run only performance-related tests
+#      - name: Run performance tests
+#        run: pnpm exec playwright test --project=chromium --grep="@performance"
+#
+#      # Upload performance results
+#      - name: Upload performance results
+#        uses: actions/upload-artifact@v4
+#        if: always()
+#        with:
+#          name: performance-results
+#          path: performance-results/
+#          retention-days: 30
+#
+#  # ========================================
+#  # 🌐 JOB 7: Lighthouse CI
+#  # ========================================
+#  # Measures page speed, SEO, accessibility, and best practices.
+#  lighthouse-ci:
+#    runs-on: ubuntu-latest
+#    needs: build
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      # Install Lighthouse CI CLI globally
+#      - name: Install Lighthouse CI
+#        run: npm install -g @lhci/cli@0.12.x
+#
+#      # Run Lighthouse analysis
+#      - name: Run Lighthouse CI
+#        run: lhci autorun
+#        env:
+#          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+#
+#      # Upload results
+#      - name: Upload Lighthouse results
+#        uses: actions/upload-artifact@v4
+#        if: always()
+#        with:
+#          name: lighthouse-results
+#          path: .lighthouseci/
+#          retention-days: 30
+#
+#  # ========================================
+#  # 🧭 JOB 8: Deploy to Staging
+#  # ========================================
+#  # Auto-deploys to staging environment on `develop` branch.
+#  deploy-staging:
+#    runs-on: ubuntu-latest
+#    needs: [lint-and-typecheck, test, build, security-scan, accessibility-test, performance-test, lighthouse-ci]
+#    if: github.ref == 'refs/heads/develop'
+#    environment: staging
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      # Placeholder for staging deploy script
+#      - name: Deploy to staging
+#        run: |
+#          echo "Deploying to staging environment..."
+#          # Add your staging deployment logic here
+#
+#  # ========================================
+#  # 🚢 JOB 9: Deploy to Production
+#  # ========================================
+#  # Deploys to production only on `main` branch after all checks.
+#  deploy-production:
+#    runs-on: ubuntu-latest
+#    needs: [lint-and-typecheck, test, build, security-scan, accessibility-test, performance-test, lighthouse-ci]
+#    if: github.ref == 'refs/heads/main'
+#    environment: production
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      # Placeholder for production deployment
+#      - name: Deploy to production
+#        run: |
+#          echo "Deploying to production environment..."
+#          # Add your production deployment logic here
+#
+#      # Optional notification step
+#      - name: Notify deployment success
+#        run: |
+#          echo "✅ Production deployment completed successfully"
+#          # Add Slack/Discord/email notifications here
+#
+#  # ========================================
+#  # 📈 JOB 10: Code Coverage
+#  # ========================================
+#  # Collects and uploads code coverage data to Codecov.
+#  code-coverage:
+#    runs-on: ubuntu-latest
+#    needs: [lint-and-typecheck, test]
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#          cache: 'pnpm'
+#
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: latest
+#
+#      - name: Install dependencies
+#        run: pnpm install
+#
+#      # Generate test coverage report
+#      - name: Generate coverage report
+#        run: |
+#          echo "Generating code coverage report..."
+#          # Add coverage generation logic here
+#
+#      # Upload report to Codecov
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          file: ./coverage/lcov.info
+#          flags: unittests
+#          name: codecov-umbrella
+#          fail_ci_if_error: false
